@@ -284,7 +284,7 @@ using Random = UnityEngine.Random;
 
             bool waswalking = m_IsWalking;
 
-            m_IsWalking = !(vertical > 9f && StaminaController.instance.canSprint);
+            m_IsWalking = !(vertical > 0.9f && StaminaController.instance.canSprint);
             m_Running = !m_IsWalking;
 
             // set the desired speed to be walking or running

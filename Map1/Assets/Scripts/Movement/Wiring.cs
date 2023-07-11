@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Wiring : MonoBehaviour
@@ -32,13 +30,9 @@ public class Wiring : MonoBehaviour
     void Update()
     {
         var fps = GetComponent<FirstPersonController>();
-
-        // if(playerInput.PlayerMain.Save.triggered)
-        // {
-        //     DataPersistenceManager.instance.SaveGame();
-        // }
-
+        
         fps.moveAxis = playerInput.PlayerMain.Move.ReadValue<Vector2>();
+        Debug.Log(fps.moveAxis);
         fps.jumpAxis = playerInput.PlayerMain.Jump.triggered;
         fps.m_MouseLook.lookAxis = touchField.TouchDist;
 
