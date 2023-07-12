@@ -27,7 +27,6 @@ Material:
   - _DETAIL_MULX2
   - _NORMALMAP
   - _OCCLUSIONMAP
-  - _SPECULAR_SETUP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -137,6 +136,7 @@ Material:
     - _Mode: 1
     - _OcclusionStrength: 0
     - _Parallax: 0.02
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SPECGLOSSMAP: 0
