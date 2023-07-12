@@ -60,7 +60,7 @@ public class StaminaController : MonoBehaviour
     private IEnumerator StaminaRegen()
     {
         WaitForSeconds timeToWait = new WaitForSeconds(staminaTimeIncrement);
-
+        
         while(playerStamina < maxStamina)
         {
             while(!(fps.moveAxis.y > 0.9))
