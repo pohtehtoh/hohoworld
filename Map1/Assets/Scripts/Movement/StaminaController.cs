@@ -1,38 +1,33 @@
 using System;
 using System.Collections;
-//using Inventory.Model;
 using UnityEngine;
 using UnityEngine.UI;
-//using UnityStandardAssets.Characters.FirstPerson;
 
 public class StaminaController : MonoBehaviour
 {
-    //[SerializeField]
-    //private InventorySO inventoryData;
+    [SerializeField]
+    // private InventorySO inventoryData;
     private FirstPersonController fps;
-    //private GunShooting gun;
+    // private GunShooting gun;
     [Header("Stamina Bar UI Elements")]
     [SerializeField] private Image staminaProgressUI = null;
-    [SerializeField] private CanvasGroup SliderCanvasGroup = null;
 
     [Header("Stamina Values")]
     public float playerStamina = 400.0f;
     public float maxStamina = 400.0f;
 
-    [Header("Stamina Regeneration Values")]
-    [Range(0, 100)] public float staminaDrain = 1.0f;
-    [Range(0, 100)] public float staminaRegen = 1.0f;
-
     [Header("Check")]
     public bool weAreSprinting = false;
     public bool canSprint = true;
-    private bool canStartRegen = true;
-
-    [Header("Enumerators")]
-    private WaitForSeconds regenTick = new WaitForSeconds(Time.deltaTime);
-    private Coroutine regen;
 
     public static StaminaController instance;
+
+//
+    [SerializeField] private float staminaUseMultiplier = 5;
+    [SerializeField] private float timeBeforeStaminaRegenStarts = 3;
+    [SerializeField] private float staminaValueIncrement = 3;
+    [SerializeField] private float staminaTimeIncrement = 0.1f;
+    private Coroutine regeneratingStamina;
 
 
     private void Awake()
@@ -45,113 +40,70 @@ public class StaminaController : MonoBehaviour
     }
     private void Update()
     {
-        //if (PauseMenu.paused)
-        //    StopAllCoroutines();
+        // if (PauseMenu.paused)
+        //     StopAllCoroutines();
 
         CheckSprint();
     }
 
     private void CheckSprint()
     {
-        if (playerStamina >= staminaDrain/* && inventoryData.Weight < inventoryData.maxWeight*/)
+        if (playerStamina > 0/* && inventoryData.Weight < inventoryData.maxWeight*/)
         {
-            //gun = gameObject.GetComponentInChildren<GunShooting>();
-            //if (gun != null && gun.isAiming) 
-                //canSprint = false;
-            /*else*/ canSprint = true;
+            // gun = gameObject.GetComponentInChildren<GunShooting>();
+            // if (gun != null && gun.isAiming) canSprint = false;
+            /*else */canSprint = true;
         }
         else canSprint = false;
     }
 
-    IEnumerator StaminaRegen()
+    private IEnumerator StaminaRegen()
     {
-        //cooldown time after using stamina
-        yield return new WaitForSeconds(2);
-
-        //regenerate stamina when not sprinting
-        while (playerStamina < maxStamina && !weAreSprinting)
+        WaitForSeconds timeToWait = new WaitForSeconds(staminaTimeIncrement);
+        
+        while(playerStamina < maxStamina)
         {
-            while (fps.moveAxis.y < 9f)
+            while(!(fps.moveAxis.y > 0.9))
             {
-               playerStamina += staminaRegen;
-                UpdateStamina(1);
-                yield return regenTick;
-
-                if (playerStamina >= maxStamina)
+                yield return new WaitForSeconds(timeBeforeStaminaRegenStarts);
+                while(playerStamina < maxStamina)
                 {
-                    yield return new WaitForSeconds(1);
-                    SliderCanvasGroup.alpha = 0;
-                    canStartRegen = true;
-                } 
-            }
-            yield return null;
-        }
-    }
-    IEnumerator StaminaRegenWait()
-    {
-        while(canStartRegen)
-        {
-            if(fps.moveAxis.y < 9f)
-            {
-                canStartRegen = false;
-                StartCoroutine(StaminaRegen());
-            }
-            yield return null;
-        }
-    }
-    IEnumerator StaminaRegenInside()
-    {
-        //regenerate stamina too but after pause and without the cooldown period
-        while (playerStamina < maxStamina && !weAreSprinting)
-        {
+                    playerStamina += staminaValueIncrement;
+                    UpdateStamina();
 
-            playerStamina += staminaRegen;
-            UpdateStamina(1);
-            yield return regenTick;
+                    if (playerStamina > maxStamina) playerStamina = maxStamina;
 
-            if (playerStamina >= maxStamina)
-            {
-                yield return new WaitForSeconds(1);
-                SliderCanvasGroup.alpha = 0;
+                    yield return timeToWait;
+                }
             }
+            yield return new WaitForSeconds(1);
         }
-    }
 
+        regeneratingStamina = null;
+    }
     public void UseStamina()
     {
-        if (playerStamina >= staminaDrain)
+        if(regeneratingStamina != null)
         {
-            playerStamina -= staminaDrain;
-            UpdateStamina(1);
+            StopCoroutine(regeneratingStamina);
+            regeneratingStamina = null;
         }
 
-        if (regen != null)
-        {
-            canStartRegen = true;
-            StopCoroutine(regen);
-        }
+        playerStamina -= staminaUseMultiplier * Time.deltaTime;
+        UpdateStamina();
 
-        regen = StartCoroutine(StaminaRegenWait());
+        if(playerStamina < 0) playerStamina = 0;
+
+        if(playerStamina <= 0) canSprint = false;
+
+        if (playerStamina < maxStamina && regeneratingStamina == null)
+        {
+            regeneratingStamina = StartCoroutine(StaminaRegen());
+        }
     }
 
-    void UpdateStamina(int value)
+    void UpdateStamina()
     {
-        //stamina bar
         staminaProgressUI.fillAmount = playerStamina / maxStamina;
-
-        if (value == 0)
-        {
-            SliderCanvasGroup.alpha = 0;
-        }
-
-        else
-        {
-            SliderCanvasGroup.alpha = 1;
-        }
-    }
-
-    public void WhenResumed()
-    {
-        StartCoroutine(StaminaRegenInside());
     }
 }
