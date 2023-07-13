@@ -32,7 +32,6 @@ public class Wiring : MonoBehaviour
         var fps = GetComponent<FirstPersonController>();
         
         fps.moveAxis = playerInput.PlayerMain.Move.ReadValue<Vector2>();
-        Debug.Log(fps.moveAxis);
         fps.jumpAxis = playerInput.PlayerMain.Jump.triggered;
         fps.m_MouseLook.lookAxis = touchField.TouchDist;
 
