@@ -25,12 +25,12 @@ public class DayNightCycle2 : MonoBehaviour
 
     void Start()
     {
-        timeRate = 1.0f / fullDayLength;
         time = startTime;
     }
 
     void Update()
     {
+        timeRate = 1.0f / fullDayLength;
         time += timeRate * Time.deltaTime;
 
         if (time >= 1.0f)
