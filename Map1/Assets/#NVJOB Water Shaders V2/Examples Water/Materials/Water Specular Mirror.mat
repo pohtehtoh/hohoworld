@@ -274,4 +274,3 @@ Material:
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _SpecColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
     - _SpecularColor: {r: 0.5808823, g: 0.5808823, b: 0.5808823, a: 1}
-  m_BuildTextureStacks: []

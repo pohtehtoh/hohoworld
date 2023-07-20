@@ -11,7 +11,6 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: cdac903258e3f324b994c0331d222b5f, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _ALPHATEST_ON
   - _DISABLE_DBUFFER
   - _DOUBLESIDED_ON
   - _MASKMAP
@@ -427,6 +426,8 @@ Material:
     - _PPDPrimitiveWidth: 1
     - _Parallax: 0.02
     - _PreRefractionPass: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RefractionMode: 0
     - _RefractionModel: 0
     - _RefractionSSRayModel: 0
