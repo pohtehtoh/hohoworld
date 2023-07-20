@@ -180,6 +180,8 @@ Material:
     - _NormalScale: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _SrcBlend: 1
     - _UVPrim: 0
     - _UVSec: 0
