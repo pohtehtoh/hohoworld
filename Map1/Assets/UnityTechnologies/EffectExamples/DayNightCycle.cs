@@ -21,6 +21,8 @@ public class DayNightCycle : MonoBehaviour
 
     [SerializeField]
     private float sunsetHour;
+    [SerializeField]
+    private float sunsetPlace;
 
     [SerializeField]
     private Color dayAmbientLight;
@@ -69,6 +71,19 @@ public class DayNightCycle : MonoBehaviour
 
         if (timeText != null)
         {
+            // var hours = timeSpan.Hours;
+            // var minutes = timeSpan.Minutes;
+            // var amPmDesignator = "AM";
+            // if (hours == 0)
+            // hours = 12;
+            // else if (hours == 12)
+            // amPmDesignator = "PM";
+            // else if (hours > 12) {
+            // hours -= 12;
+            // amPmDesignator = "PM";
+            // }
+            // var formattedTime =
+            // String.Format("{0}:{1:00} {2}", hours, minutes, amPmDesignator);
             timeText.text = currentTime.ToString("HH:mm");
         }
     }
@@ -96,7 +111,8 @@ public class DayNightCycle : MonoBehaviour
             sunLightRotation = Mathf.Lerp(180, 360, (float)percentage);
         }
 
-        sunLight.transform.rotation = Quaternion.AngleAxis(sunLightRotation, Vector3.right);
+        //sunLight.transform.rotation = Quaternion.AngleAxis(sunLightRotation, Vector3.right);
+        sunLight.transform.rotation = Quaternion.Euler(sunLightRotation, sunsetPlace, 0f);
     }
 
     private void UpdateLightSettings()
