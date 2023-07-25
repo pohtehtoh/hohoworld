@@ -92,7 +92,7 @@ public class Rain : MonoBehaviour
             toggleMediumRain.isOn = false;
             toggleNoRain.isOn = false;
             emissionModule.rateOverTime = 3000f;
-            fogEmissionModule.rateOverTime = 200f;
+            fogEmissionModule.rateOverTime = 150f;
         }
         
     }

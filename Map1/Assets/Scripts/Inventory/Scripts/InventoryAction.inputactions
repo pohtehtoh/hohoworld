@@ -1,0 +1,94 @@
+{
+    "name": "InventoryAction",
+    "maps": [
+        {
+            "name": "InventoryMain",
+            "id": "be3d9edd-d36c-4737-b584-e25c16dd9a11",
+            "actions": [
+                {
+                    "name": "Bag",
+                    "type": "Button",
+                    "id": "f4094948-277c-4892-a811-38306c2d83b8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PickUp",
+                    "type": "Button",
+                    "id": "842c7df5-3fb3-4708-96d3-c5c07bbec763",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GunSlot1",
+                    "type": "Button",
+                    "id": "484fad14-2cc7-41e7-b84c-7f6fd37bdeff",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GunSlot2",
+                    "type": "Button",
+                    "id": "8b276d08-2ae5-4645-a0ba-0cc0db19fdaa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c5eae960-c7ad-43e9-8859-f55eee8bca1e",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Bag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74cc1f91-e344-4f98-8dfe-2db428c58a4d",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e2f4304-b761-4c9c-85aa-cc0dc5d252bd",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GunSlot1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6fb50e4b-53f0-4691-a9e9-a8e94e29be29",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GunSlot2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

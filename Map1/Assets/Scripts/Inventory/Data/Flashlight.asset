@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4706964a4c43d4647b0f03643aac2719, type: 3}
+  m_Name: Flashlight
+  m_EditorClassIdentifier: 
+  nameString: Flashlight
+  prefab: {fileID: 5351697256198870668, guid: 319248f089a7c5146911b93b3b12effe, type: 3}
+  visual: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
+  width: 2
+  height: 1
+  <IsStackable>k__BackingField: 0
+  <MaxStackSize>k__BackingField: 1
+  <Name>k__BackingField: Flashlight
+  <Description>k__BackingField: To see in dark
+  <ItemImage>k__BackingField: {fileID: 0}
+  <ItemWeight>k__BackingField: 5
+  <DefaultParametersList>k__BackingField: []
+  <action1SFX>k__BackingField: {fileID: 0}
