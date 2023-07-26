@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4706964a4c43d4647b0f03643aac2719, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a321b50c5776094fafe06516a7dcb9e, type: 3}
   m_Name: Flashlight
   m_EditorClassIdentifier: 
   nameString: Flashlight
@@ -20,7 +20,7 @@ MonoBehaviour:
   <IsStackable>k__BackingField: 0
   <MaxStackSize>k__BackingField: 1
   <Name>k__BackingField: Flashlight
-  <Description>k__BackingField: To see in dark
+  <Description>k__BackingField: To see in the dark
   <ItemImage>k__BackingField: {fileID: 0}
   <ItemWeight>k__BackingField: 5
   <DefaultParametersList>k__BackingField: []

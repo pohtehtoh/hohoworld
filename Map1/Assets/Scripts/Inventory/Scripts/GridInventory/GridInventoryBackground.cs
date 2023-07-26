@@ -21,9 +21,9 @@ public class GridInventoryBackground : MonoBehaviour {
 
         GetComponent<GridLayoutGroup>().cellSize = new Vector2(gridInventory.GetGrid().GetCellSize(), gridInventory.GetGrid().GetCellSize());
 
-        GetComponent<RectTransform>().sizeDelta = new Vector2(gridInventory.GetGrid().GetWidth() + 1, gridInventory.GetGrid().GetHeight()) * gridInventory.GetGrid().GetCellSize();
+        GetComponent<RectTransform>().sizeDelta = new Vector2(gridInventory.GetGrid().GetWidth(), gridInventory.GetGrid().GetHeight()) * gridInventory.GetGrid().GetCellSize();
 
-        GetComponent<RectTransform>().anchoredPosition = gridInventory.GetComponent<RectTransform>().anchoredPosition;
+        //GetComponent<RectTransform>().anchoredPosition = gridInventory.GetComponent<RectTransform>().anchoredPosition;
     }
 
 }

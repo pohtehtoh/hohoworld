@@ -1,10 +1,15 @@
 using Inventory.Model;
+using TMPro;
 using UnityEngine;
 
 public class PickUpSystem : MonoBehaviour
 {
     [SerializeField]
     private InventorySO inventoryData;
+    [SerializeField]
+    private GameObject actionTextPrefab;
+    [SerializeField]
+    private Transform actionText;
     [SerializeField]
     [Min(1)]
     private float hitRange = 3;
@@ -48,10 +53,17 @@ public class PickUpSystem : MonoBehaviour
                 if(reminder == 0)
                 {
                     item.PickUpItem();
+                    AddActionText(item.InventoryItem.Name + " picked up", Color.white);
                 }
                 else
                     item.Quantity = reminder;
             }
         }
+    }
+    public void AddActionText(string text, Color textColour)
+    {
+        GameObject actionTextPop = Instantiate(actionTextPrefab, actionText);
+        actionTextPop.GetComponent<TextMeshProUGUI>().text = text;
+        actionTextPop.GetComponent<TextMeshProUGUI>().color = textColour;
     }
 }

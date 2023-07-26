@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1102792076926033438}
   - component: {fileID: 4464539356901506183}
   - component: {fileID: 8452271607525952231}
+  - component: {fileID: 474843309043208363}
   m_Layer: 5
   m_Name: Flashlight
   m_TagString: Untagged
@@ -40,7 +41,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 60}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &3368897588463448332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +94,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccba53bab431f8e4da246061c55cfb6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &474843309043208363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3128062290275177920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2355305ade78e8498459d7898e3cc74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillProgress: {fileID: 4024698280554266092}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0.3018868, g: 0.06977572, b: 0.06977572, a: 0.39215687}
+    key1: {r: 0.65882355, g: 0.65882355, b: 0.65882355, a: 0.39215687}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!1001 &7316125877978784755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,11 +149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
       propertyPath: m_RootOrder
@@ -118,19 +161,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
       propertyPath: m_SizeDelta.x
@@ -195,3 +238,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8232766144343085083, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
   m_PrefabInstance: {fileID: 7316125877978784755}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4024698280554266092 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5931944921018146335, guid: f9f3cc296b23a144ba12b6c3b347ca2d, type: 3}
+  m_PrefabInstance: {fileID: 7316125877978784755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

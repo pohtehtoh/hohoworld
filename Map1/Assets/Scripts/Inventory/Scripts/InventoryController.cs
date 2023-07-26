@@ -22,16 +22,15 @@ namespace Inventory
         private TMP_Text weight;
         public List<InventoryItem> initialItems = new List<InventoryItem>();
         [SerializeField]
+        public GameObject[] interactables;
+        [SerializeField]
         private AudioClip dropClip;
         [SerializeField]
         private AudioSource audioSource;
         private InventoryAction inventoryInput;
         public static InventoryController instance { get; private set; }
 
-        //to delete later
-        //[SerializeField]
-        //public Lock keyLock;
-
+    
         private void Awake()
         {
             instance = this;
@@ -53,6 +52,8 @@ namespace Inventory
             inventoryUI.OnItemActionRequested += HandleItemActionRequest;
 
             inventoryData.gridInventory = this.gridInventory;
+
+            interactables = GameObject.FindGameObjectsWithTag("Selectable");
         }
         public void InitializeInitialItems()
         {
@@ -75,33 +76,42 @@ namespace Inventory
 
                 if (GetGameObject(inventoryItem.item.Name) != null)
                 {
-                    if (GetGameObject(inventoryItem.item.Name).GetComponent<Item>().itemType == Item.ItemType.weapon)
+                    if (GetGameObject(inventoryItem.item.Name).GetComponent<Item>().useOtherAction)
                     {
-                        if (GetGameObject(inventoryItem.item.Name).GetComponent<Item>().useOtherAction)
-                        {
-                        inventoryUI.AddAction(itemAction.ActionName2, () => PerformAction(inventoryItemUI, inventoryItem));
-                        }
-                        else
-                        {
-                            inventoryUI.AddAction(itemAction.ActionName1, () => PerformAction(inventoryItemUI, inventoryItem));
-                        }
-                    }
-                    else if(GetGameObject(inventoryItem.item.Name).GetComponent<Item>().itemType == Item.ItemType.item)
-                    {
-                        // if (Vector3.Distance(this.transform.position, keyLock.gameObject.transform.position) <= 3)
-                        // {
-                        //     inventoryUI.AddAction(itemAction.ActionName1, () => PerformAction(inventoryItemUI, inventoryItem));
-                        // }
+                    inventoryUI.AddAction(itemAction.ActionName2, () => PerformAction(inventoryItemUI, inventoryItem));
                     }
                     else
                     {
                         inventoryUI.AddAction(itemAction.ActionName1, () => PerformAction(inventoryItemUI, inventoryItem));
                     }
+
+                    // if (GetGameObject(inventoryItem.item.Name).GetComponent<Item>().itemType == Item.ItemType.weapon)
+                    // {
+                    //     if (GetGameObject(inventoryItem.item.Name).GetComponent<Item>().useOtherAction)
+                    //     {
+                    //     inventoryUI.AddAction(itemAction.ActionName2, () => PerformAction(inventoryItemUI, inventoryItem));
+                    //     }
+                    //     else
+                    //     {
+                    //         inventoryUI.AddAction(itemAction.ActionName1, () => PerformAction(inventoryItemUI, inventoryItem));
+                    //     }
+                    // }
+                    // else if(GetGameObject(inventoryItem.item.Name).GetComponent<Item>().itemType == Item.ItemType.item)
+                    // {
+                    //     // if (Vector3.Distance(this.transform.position, keyLock.gameObject.transform.position) <= 3)
+                    //     // {
+                    //     //     inventoryUI.AddAction(itemAction.ActionName1, () => PerformAction(inventoryItemUI, inventoryItem));
+                    //     // }
+                    // }
+                    // else
+                    // {
+                    //     inventoryUI.AddAction(itemAction.ActionName1, () => PerformAction(inventoryItemUI, inventoryItem));
+                    // }
                 }
-                else
-                {
-                    inventoryUI.AddAction(itemAction.ActionName1, () => PerformAction(inventoryItemUI, inventoryItem));
-                }
+                // else
+                // {
+                //     inventoryUI.AddAction(itemAction.ActionName1, () => PerformAction(inventoryItemUI, inventoryItem));
+                // }
             }
 
             IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
@@ -143,39 +153,47 @@ namespace Inventory
                 return;
 
             IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
+            IItemAction itemAction = inventoryItem.item as IItemAction;
             if(destroyableItem != null)
             {
                 if(GetGameObject(inventoryItem.item.Name) != null)
                 {
                     if (GetGameObject(inventoryItem.item.Name).GetComponent<Item>().itemType == Item.ItemType.food || GetGameObject(inventoryItem.item.Name).GetComponent<Item>().itemType == Item.ItemType.item)
                     {
-                        inventoryItemUI.GetComponent<PlacedObject>().ChangeInventoryItem(inventoryData.RemoveItem(inventoryItem, 1));
-                        gridInventory.RemoveItemAt(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition());
-                        bool hasItem = gridInventory.GetGrid().GetGridObject(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition().x, inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition().y).HasPlacedObject();
-                        if (!hasItem) inventoryUI.ResetSelection();
-                        Destroy(GetGameObject(inventoryItem.item.Name));
-                    }
-                }
-            }
-
-            IItemAction itemAction = inventoryItem.item as IItemAction;
-            if(itemAction != null)
-            {
-                if (GetGameObject(inventoryItem.item.Name) != null)
-                {
-                    if (GetGameObject(inventoryItem.item.Name).GetComponent<Item>().itemType == Item.ItemType.weapon && GetGameObject(inventoryItem.item.Name).GetComponent<Item>().useOtherAction)
-                    {
-                        itemAction.PerformActionTwo(gameObject, inventoryItem);
-                        audioSource.PlayOneShot(itemAction.action2SFX);
+                        if(itemAction != null)
+                        {
+                            if(itemAction.PerformActionOne(gameObject, inventoryItem))
+                            {
+                                audioSource.PlayOneShot(itemAction.action1SFX);
+                                inventoryItemUI.GetComponent<PlacedObject>().ChangeInventoryItem(inventoryData.RemoveItem(inventoryItem, 1));
+                                gridInventory.RemoveItemAt(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition());
+                                bool hasItem = gridInventory.GetGrid().GetGridObject(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition().x, inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition().y).HasPlacedObject();
+                                if (!hasItem) inventoryUI.ResetSelection();
+                                Destroy(GetGameObject(inventoryItem.item.Name));
+                            }
+                        }
                     }
                     else
                     {
-                        itemAction.PerformActionOne(gameObject, inventoryItem);
-                        audioSource.PlayOneShot(itemAction.action1SFX);
+                        if(itemAction != null)
+                        {
+                            if (GetGameObject(inventoryItem.item.Name) != null)
+                            {
+                                if (/*GetGameObject(inventoryItem.item.Name).GetComponent<Item>().itemType == Item.ItemType.weapon && */GetGameObject(inventoryItem.item.Name).GetComponent<Item>().useOtherAction)
+                                {
+                                    itemAction.PerformActionTwo(gameObject, inventoryItem);
+                                    audioSource.PlayOneShot(itemAction.action2SFX);
+                                }
+                                else
+                                {
+                                    itemAction.PerformActionOne(gameObject, inventoryItem);
+                                    audioSource.PlayOneShot(itemAction.action1SFX);
+                                }
+                            }
+                            inventoryUI.ResetSelection();
+                        }
                     }
                 }
-
-                inventoryUI.ResetSelection();
             }
         }
         private void HandleDescriptionRequest(UIInventoryItem inventoryItemUI, InventoryItem inventoryItem)

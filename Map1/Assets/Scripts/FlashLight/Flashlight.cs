@@ -5,7 +5,7 @@ using UnityEngine;
 public class Flashlight : MonoBehaviour
 {
     private Light flashLight;
-    [SerializeField] private float maxBrightness;
+    [SerializeField] public float maxBrightness;
     [SerializeField] private float minBrightness;
     [SerializeField] private float drainRate;
 
@@ -33,7 +33,7 @@ public class Flashlight : MonoBehaviour
         }
         else
         {
-            flashLight.intensity += 10f;
+            flashLight.intensity += 30f;
             if(flashLight.intensity > maxBrightness) flashLight.intensity = maxBrightness;
         }
     }

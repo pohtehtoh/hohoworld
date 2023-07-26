@@ -15,12 +15,69 @@ namespace Inventory.Model
 
         public bool PerformActionOne(GameObject character, InventoryItem inventoryItem)
         {
-            // Lock keyLock = character.GetComponent<InventoryController>().keyLock;
-            // if(keyLock != null)
-            // {
-            //     keyLock.OpenLock(character);
-            //     return true;
-            // }
+            Flashlight flashlight = character.GetComponentInChildren<Flashlight>();
+            InventoryController inventoryController = character.GetComponent<InventoryController>();
+            PickUpSystem pickUpSystem = character.GetComponent<PickUpSystem>();
+            if(Name == "Battery")
+            {
+                if(inventoryController.GetGameObject("Flashlight") != null)
+                {
+                    if(flashlight != null)
+                    {
+                        if(flashlight.gameObject.GetComponent<Light>().intensity < flashlight.maxBrightness)
+                        {
+                            flashlight.ReplaceBattery();
+                            return true;
+                        }
+                        else
+                        {
+                            if(pickUpSystem != null)
+                            {
+                                pickUpSystem.AddActionText("Your battery is full", Color.red);
+                            }
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if(pickUpSystem != null)
+                    {
+                        pickUpSystem.AddActionText("You dont have a flashlight", Color.red);
+                    }
+                    return false;
+                }
+            }
+            else if(Name == "Key")
+            {
+                foreach(GameObject interactable in inventoryController.interactables)
+                {
+                    if(interactable.GetComponent<Interaction>() != null)
+                    {
+                        if(interactable.GetComponent<Interaction>().Name == "WitchGateLock")
+                        {
+                    
+                            Lock keyLock = interactable.GetComponentInChildren<Lock>();
+                            if(keyLock != null)
+                            {
+                                if(Vector3.Distance(character.transform.position, keyLock.gameObject.transform.position) <= 3)
+                                {
+                                    keyLock.OpenLock(character);
+                                    return true;
+                                }
+                                else
+                                {
+                                    if(pickUpSystem != null)
+                                    {
+                                        pickUpSystem.AddActionText("There is no lock nearby", Color.red);
+                                    }
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             return false;
         }
 
