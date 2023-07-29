@@ -52,28 +52,21 @@ namespace Inventory.Model
             {
                 foreach(GameObject interactable in inventoryController.interactables)
                 {
-                    if(interactable.GetComponent<Interaction>() != null)
+                    Lock keyLock = interactable.GetComponentInChildren<Lock>();
+                    if(keyLock != null)
                     {
-                        if(interactable.GetComponent<Interaction>().Name == "WitchGateLock")
+                        if(Vector3.Distance(character.transform.position, keyLock.gameObject.transform.position) <= 3)
                         {
-                    
-                            Lock keyLock = interactable.GetComponentInChildren<Lock>();
-                            if(keyLock != null)
+                            keyLock.OpenLock(character);
+                            return true;
+                        }
+                        else
+                        {
+                            if(pickUpSystem != null)
                             {
-                                if(Vector3.Distance(character.transform.position, keyLock.gameObject.transform.position) <= 3)
-                                {
-                                    keyLock.OpenLock(character);
-                                    return true;
-                                }
-                                else
-                                {
-                                    if(pickUpSystem != null)
-                                    {
-                                        pickUpSystem.AddActionText("There is no lock nearby", Color.red);
-                                    }
-                                    return false;
-                                }
+                                pickUpSystem.AddActionText("There is no lock nearby", Color.red);
                             }
+                            return false;
                         }
                     }
                 }

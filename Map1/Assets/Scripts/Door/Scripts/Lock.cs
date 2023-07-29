@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Lock : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private string Name;
     [SerializeField] private GameObject leftGate;
     [SerializeField] private GameObject rightGate;
 
