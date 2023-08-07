@@ -57,6 +57,7 @@ MonoBehaviour:
     quantity: 0
     item: {fileID: 0}
     itemState: []
+  quantityText: {fileID: 746889299537864573}
 --- !u!225 &2625941261852143439
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -190,6 +191,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e0fe4a8ad06c6f408ef780e41d6cc40, type: 3}
+--- !u!114 &746889299537864573 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3327118295210738739, guid: 4e0fe4a8ad06c6f408ef780e41d6cc40, type: 3}
+  m_PrefabInstance: {fileID: 2625941263010227022}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6242873693909395953 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8273696519662226111, guid: 4e0fe4a8ad06c6f408ef780e41d6cc40, type: 3}

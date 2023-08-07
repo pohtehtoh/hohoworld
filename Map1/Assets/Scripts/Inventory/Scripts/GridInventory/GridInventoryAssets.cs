@@ -12,6 +12,7 @@ public class GridInventoryAssets : MonoBehaviour {
         Instance = this;
     }
 
+    public List<CraftingRecipe> craftingRecipes = new List<CraftingRecipe>();
     public ItemSO[] itemSOArray;
 
     public ItemSO gun;

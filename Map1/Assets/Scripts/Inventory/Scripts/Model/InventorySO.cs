@@ -71,21 +71,23 @@ namespace Inventory.Model
                     int amountPossibleToTake = itemPrefab.GetComponent<PlacedObject>().inventoryItem.item.MaxStackSize - itemPrefab.GetComponent<PlacedObject>().inventoryItem.quantity;
                     if(quantity > amountPossibleToTake)
                     {
-                        Weight += (item.ItemWeight * amountPossibleToTake);
+                        Weight += item.ItemWeight * amountPossibleToTake;
                         itemPrefab.GetComponent<PlacedObject>().inventoryItem = itemPrefab.GetComponent<PlacedObject>().inventoryItem.RemoveQuantity(itemPrefab.GetComponent<PlacedObject>().inventoryItem.item.MaxStackSize);
+                        itemPrefab.GetComponent<PlacedObject>().ChangeQuantityText();
                         quantity -= amountPossibleToTake;
                     }
                     else
                     {
-                        Weight += (item.ItemWeight * quantity);
+                        Weight += item.ItemWeight * quantity;
                         itemPrefab.GetComponent<PlacedObject>().inventoryItem = itemPrefab.GetComponent<PlacedObject>().inventoryItem.AddQuantity(itemPrefab.GetComponent<PlacedObject>().inventoryItem.quantity + quantity);
+                        itemPrefab.GetComponent<PlacedObject>().ChangeQuantityText();
                         return 0;
                     }
                 }
             }
             while (quantity > 0)
             {
-                Weight += (item.ItemWeight * quantity);
+                Weight += item.ItemWeight * quantity;
                 int newQuantity = Mathf.Clamp(quantity, 0, item.MaxStackSize);
                 quantity -= newQuantity;
                 AddItemToFirstFreeSlot(item, newQuantity);
@@ -101,7 +103,7 @@ namespace Inventory.Model
             if(inventoryItem.IsEmpty)
                 return inventoryItem;
             int reminder = inventoryItem.quantity - amount;
-            Weight -= (inventoryItem.item.ItemWeight * amount);
+            Weight -= inventoryItem.item.ItemWeight * amount;
             if(Weight < 0) Weight = 0;
             if(reminder <= 0)
                 inventoryItem = InventoryItem.GetEmptyItem();

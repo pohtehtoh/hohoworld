@@ -9,6 +9,8 @@ namespace Inventory.UI
     [SerializeField]
     private GridInventory gridInventory;
     [SerializeField]
+    private InventorySO inventoryData;
+    [SerializeField]
     private UIInventoryDescription itemDescription;
     public event Action<UIInventoryItem, InventoryItem> OnDescriptionRequested, OnItemActionRequested;
     [SerializeField]
@@ -75,8 +77,11 @@ namespace Inventory.UI
           if (gridInventory.GetGrid().GetGridObject(x, y).HasPlacedObject())
           {
             PlacedObject placedObject = gridInventory.GetGrid().GetGridObject(x, y).GetPlacedObject();
+            int itemQuantity = placedObject.inventoryItem.quantity;
             gridInventory.RemoveItemAt(placedObject.GetGridPosition());
             gridInventory.TryPlaceItem(placedObject.GetPlacedObjectTypeSO() as ItemSO, placedObject.GetGridPosition(), placedObject.GetDir());
+            PlacedObject placedObject2 = gridInventory.GetGrid().GetGridObject(x, y).GetPlacedObject();
+            placedObject2.inventoryItem.quantity = itemQuantity;
           }
         }
       }

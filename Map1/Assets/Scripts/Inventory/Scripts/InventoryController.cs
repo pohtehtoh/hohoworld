@@ -13,9 +13,11 @@ namespace Inventory
         [SerializeField]
         private UIInventoryPage inventoryUI;
         [SerializeField]
-        private InventorySO inventoryData;
+        public InventorySO inventoryData;
         [SerializeField]
         public GridInventory gridInventory;
+        [SerializeField]
+        public PickUpSystem pickUpSystem;
         [SerializeField]
         public GridInventoryAssets gridInventoryAssets;
         [SerializeField]
@@ -30,6 +32,40 @@ namespace Inventory
         private InventoryAction inventoryInput;
         public static InventoryController instance { get; private set; }
 
+        public void Craft(CraftingRecipe craftingRecipe)
+        {
+            bool bagFull = true;
+            for (int y = gridInventory.GetGrid().GetHeight(); y >= 0; y--)
+            {
+                for (int x = 0; x < gridInventory.GetGrid().GetWidth(); x++)
+                {
+                    if (gridInventory.CanPlaceItem(craftingRecipe.outputItems.item, gridInventory.GetGridPosition(gridInventory.GetGrid().GetWorldPosition(x, y)), PlacedObjectTypeSO.Dir.Up))
+                    {
+                        bagFull = false;
+                        break;
+                    }
+                    
+                }
+            }
+
+            if(!bagFull)
+            {
+                if (craftingRecipe.CanCraft(this))
+                {
+                    craftingRecipe.Craft(this);
+                    string text = "x" + $"{craftingRecipe.outputItems.quantity}" + " " + $"{craftingRecipe.outputItems.item.Name}" + " created";
+                    pickUpSystem.AddActionText(text, Color.white);
+                }
+                else
+                {
+                    pickUpSystem.AddActionText("Not enough materials", Color.red);
+                }
+            }
+            else
+            {
+                pickUpSystem.AddActionText("Bag full", Color.red);
+            }
+        }
     
         private void Awake()
         {
@@ -52,6 +88,8 @@ namespace Inventory
             inventoryUI.OnItemActionRequested += HandleItemActionRequest;
 
             inventoryData.gridInventory = this.gridInventory;
+
+            pickUpSystem = GetComponent<PickUpSystem>();
 
             interactables = GameObject.FindGameObjectsWithTag("Selectable");
         }
@@ -123,7 +161,7 @@ namespace Inventory
         private void DropItem(UIInventoryItem inventoryItemUI, InventoryItem inventoryItem)
         {
             inventoryItemUI.GetComponent<PlacedObject>().ChangeInventoryItem(inventoryData.RemoveItem(inventoryItem, 1));
-            gridInventory.RemoveItemAt(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition());
+            if(inventoryItemUI.GetComponent<PlacedObject>().GetInventoryItem().IsEmpty) gridInventory.RemoveItemAt(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition());
 
             bool hasItem = gridInventory.GetGrid().GetGridObject(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition().x, inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition().y).HasPlacedObject();
             if (!hasItem) inventoryUI.ResetSelection();
@@ -166,7 +204,7 @@ namespace Inventory
                             {
                                 audioSource.PlayOneShot(itemAction.action1SFX);
                                 inventoryItemUI.GetComponent<PlacedObject>().ChangeInventoryItem(inventoryData.RemoveItem(inventoryItem, 1));
-                                gridInventory.RemoveItemAt(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition());
+                                if(inventoryItemUI.GetComponent<PlacedObject>().GetInventoryItem().IsEmpty) gridInventory.RemoveItemAt(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition());
                                 bool hasItem = gridInventory.GetGrid().GetGridObject(inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition().x, inventoryItemUI.GetComponent<PlacedObject>().GetGridPosition().y).HasPlacedObject();
                                 if (!hasItem) inventoryUI.ResetSelection();
                                 Destroy(GetGameObject(inventoryItem.item.Name));

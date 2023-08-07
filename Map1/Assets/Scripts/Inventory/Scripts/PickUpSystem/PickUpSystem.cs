@@ -50,7 +50,11 @@ public class PickUpSystem : MonoBehaviour
             if (CanPickUp(item))
             {
                 int reminder = inventoryData.AddItem(item.InventoryItem, item.Quantity);
-                if(reminder == 0)
+                if(reminder == item.Quantity)
+                {
+                    AddActionText("Bag full", Color.red);
+                }
+                else if(reminder == 0)
                 {
                     item.PickUpItem();
                     AddActionText(item.InventoryItem.Name + " picked up", Color.white);

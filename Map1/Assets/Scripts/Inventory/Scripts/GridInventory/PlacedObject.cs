@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using Inventory.Model;
+using TMPro;
 using UnityEngine;
 
 public class PlacedObject : MonoBehaviour {
 
 
     public InventoryItem inventoryItem;
+    public TextMeshProUGUI quantityText;
+
     public static PlacedObject Create(Vector3 worldPosition, Vector2Int origin, PlacedObjectTypeSO.Dir dir, PlacedObjectTypeSO placedObjectTypeSO) {
         Transform placedObjectTransform = Instantiate(placedObjectTypeSO.prefab, worldPosition, Quaternion.Euler(0, placedObjectTypeSO.GetRotationAngle(dir), 0));
 
@@ -87,8 +90,20 @@ public class PlacedObject : MonoBehaviour {
     }
     public InventoryItem ChangeInventoryItem(InventoryItem newInventoryItem)
     {
-        this.inventoryItem = newInventoryItem;
+        inventoryItem = newInventoryItem;
+        ChangeQuantityText();
         return inventoryItem;
+    }
+    public void ChangeQuantityText()
+    {
+        if(inventoryItem.quantity == 1)
+        {
+            quantityText.text = "";
+        }
+        else
+        {
+            quantityText.text = "" + inventoryItem.quantity;
+        }
     }
 
 

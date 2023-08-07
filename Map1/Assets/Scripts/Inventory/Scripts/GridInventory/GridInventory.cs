@@ -98,6 +98,58 @@ public class GridInventory : MonoBehaviour {
         return false;
     }
 
+    public bool Contains(InventoryItem inventoryItem, int quantity)
+    {
+        foreach (Transform itemPrefab in itemContainer)
+        {
+            if (itemPrefab.GetComponent<PlacedObject>().inventoryItem.item.Name == inventoryItem.item.Name && itemPrefab.GetComponent<PlacedObject>().inventoryItem.quantity >= quantity)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public PlacedObject Contains(InventoryItem inventoryItem)
+    {
+        foreach (Transform itemPrefab in itemContainer)
+        {
+            if (itemPrefab.GetComponent<PlacedObject>().inventoryItem.item.Name == inventoryItem.item.Name)
+            {
+                return itemPrefab.GetComponent<PlacedObject>();
+            }
+        }
+        return null;
+    }
+
+    public bool CanPlaceItem(ItemSO itemSO, Vector2Int placedObjectOrigin, PlacedObjectTypeSO.Dir dir)
+    {
+        List<Vector2Int> gridPositionList = itemSO.GetGridPositionList(placedObjectOrigin, dir);
+        bool canPlace = true;
+        foreach (Vector2Int gridPosition in gridPositionList) {
+            bool isValidPosition = grid.IsValidGridPosition(gridPosition);
+            if (!isValidPosition) {
+                // Not valid
+                canPlace = false;
+                break;
+            }
+            if (!grid.GetGridObject(gridPosition.x, gridPosition.y).CanBuild()) {
+                canPlace = false;
+                break;
+            }
+        }
+
+        if (canPlace) {
+            foreach (Vector2Int gridPosition in gridPositionList) {
+                if (!grid.GetGridObject(gridPosition.x, gridPosition.y).CanBuild()) {
+                    canPlace = false;
+                    break;
+                }
+            }
+        }
+
+        return canPlace;
+    }
     public bool TryPlaceItem(ItemSO itemSO, Vector2Int placedObjectOrigin, PlacedObjectTypeSO.Dir dir)
     {
         // Test Can Build
